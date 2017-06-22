@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hackjam.dao.MenuDAO">
+	<select id="select" resultType="Menu" parameterType="int">
+		SELECT
+			menu_id,
+			menu_name,
+			cost,
+			image_name,
+			UPPER(menu_type) AS menu_type
+		FROM
+			menu
+		WHERE
+			menu_id = #{menuId}
+	</select>
+
+	<select id="selectAll" resultType="Menu">
+		SELECT
+			menu_id,
+			menu_name,
+			cost,
+			image_name,
+			UPPER(menu_type) AS menu_type
+		FROM
+			menu
+	</select>
+
+	<insert id="insert" parameterType="Menu">
+		INSERT
+		INTO
+			menu(
+				menu_name,
+				cost,
+				image_name,
+				menu_type
+			)
+		VALUES (
+			#{Name},
+			#{cost},
+			#{imageName},
+			#{menuType.name}
+		)
+	</insert>
+
+	<delete id="delete" parameterType="int">
+		DELETE
+		FROM
+			menu
+		WHERE
+			menu_id = #{menuId}
+	</delete>
+
+	<update id="update" parameterType="Menu">
+		UPDATE
+			menu
+		SET
+			menu_name = #{menuName},
+			cost = #{cost},
+			image_name = #{imageName},
+			menu_type = #{menuType.name}
+		WHERE
+			menu_id = #{menuId}
+	</update>
+</mapper>

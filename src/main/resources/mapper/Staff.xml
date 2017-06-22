@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hackjam.dao.StaffDAO">
+	<select id="isExists" resultType="boolean">
+		SELECT
+			EXISTS (
+				SELECT
+					1
+				FROM
+					staff
+				WHERE
+					employee_no = #{employeeNo}
+			)
+	</select>
+
+	<insert id="insert" parameterType="String">
+		INSERT
+		INTO
+			staff(
+				employee_no
+			)
+		VALUES (
+			#{employeeNo}
+		)
+	</insert>
+
+	<delete id="delete" parameterType="String">
+		DELETE
+		FROM
+			staff
+		WHERE
+			employee_no = #{employeeNo}
+	</delete>
+</mapper>
