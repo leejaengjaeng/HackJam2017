@@ -14,7 +14,9 @@ import com.hackjam.model.Order;
 public interface OrderDAO {
 	Order select(int orderId);
 
-	List<Order> selectAll(String employeeNo);
+	List<Order> selectAll();
+
+	List<Order> selectAllByEmployeeNo(String employeeNo);
 
 	boolean insert(Order order);
 
@@ -24,5 +26,5 @@ public interface OrderDAO {
 	boolean update(Order order);
 	*/
 
-	boolean updateOrderStatus(@Param("orderId") int orderId, @Param("status") int status);
+	boolean updateOrderStatus(@Param("orderId") int orderId, @Param("status") boolean status);
 }

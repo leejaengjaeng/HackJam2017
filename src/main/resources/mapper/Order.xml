@@ -1,10 +1,61 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.hackjam.dao.OrderDAO">
-	<select id="select" resultType="Order" parameterType="int">
+    <resultMap id="employeeResultMap" type="Employee">
+        <id property="employeeNo" column="employee_no"/>
+        <result property="employeeName" column="employee_name"/>
+        <result property="email" column="email"/>
+    </resultMap>
+
+    <resultMap id="orderResultMap" type="Order">
+        <id property="orderId" column="order_id"/>
+        <result property="orderYmdt" column="order_ymdt"/>
+        <result property="finishYmdt" column="finish_ymdt"/>
+        <result property="cost" column="cost"/>
+        <result property="orderStatus" column="order_status"/>
+        <association property="employee" resultMap="employeeResultMap"/>
+    </resultMap>
+
+    <select id="select" resultMap="orderResultMap" parameterType="int">
+		SELECT
+			order_id,
+			e.employee_no,
+			e.employee_name,
+			(SELECT SUM(cost) FROM order_detail where order_id = o.order_id) AS cost,
+			order_ymdt,
+			finish_ymdt,
+			order_status
+		FROM
+			`order` o
+		JOIN
+			employee e
+		ON
+			o.employee_no = e.employee_no
+		WHERE
+			order_id = #{orderId}
+	</select>
+
+    <select id="selectAll" resultMap="orderResultMap">
+		SELECT
+			order_id,
+			e.employee_no,
+			e.employee_name,
+			(SELECT SUM(cost) FROM order_detail where order_id = o.order_id) AS cost,
+			order_ymdt,
+			finish_ymdt,
+			order_status
+		FROM
+			`order` o
+		JOIN
+			employee e
+		ON
+			o.employee_no = e.employee_no
+	</select>
+
+    <select id="selectAllByEmployeeNo" resultType="Order" parameterType="String">
 		SELECT
 			order_id,
 			employee_no,
@@ -15,22 +66,10 @@
 		FROM
 			`order` o
 		WHERE
-			order_id = #{orderId}
+			employee_no = #{employeeNo}
 	</select>
 
-	<select id="selectAll" resultType="Order">
-		SELECT
-			order_id,
-			employee_no,
-			(SELECT SUM(cost) FROM order_detail where order_id = o.order_id) AS cost,
-			order_ymdt,
-			finish_ymdt,
-			order_status
-		FROM
-			`order` o
-	</select>
-
-	<insert id="insert" parameterType="Order" useGeneratedKeys="true" keyProperty="orderId">
+    <insert id="insert" parameterType="Order" useGeneratedKeys="true" keyProperty="orderId">
 		INSERT
 		INTO
 			`order` (
@@ -39,9 +78,18 @@
 			order_status
 		)
 		VALUES (
-			#{employeeNo},
+			#{employee.employeeNo},
 			NOW(),
 			#{orderStatus}
 		)
 	</insert>
+
+	<update id="updateOrderStatus" parameterType="Map">
+		UPDATE
+			`order`
+		SET
+			order_status = #{status}
+		WHERE
+			order_id = #{orderId}
+	</update>
 </mapper>

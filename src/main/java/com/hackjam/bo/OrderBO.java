@@ -1,6 +1,9 @@
 package com.hackjam.bo;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,22 +27,41 @@ public class OrderBO {
 
 	@Transactional(rollbackFor = Exception.class)
 	public void addOrder(Order order, String employeeNo) {
-		order.setEmployeeNo(employeeNo);
-		order.setOrderStatus(0);
+		order.getEmployee().setEmployeeNo(employeeNo);
+		order.setOrderStatus(false);
 
 		orderDAO.insert(order);
 		orderDetailDAO.insert(order.getOrderId(), order.getOrderDetails());
 	}
 
 	public List<Order> getHistory(String employeeNo) {
-		return orderDAO.selectAll(employeeNo);
+		return orderDAO.selectAllByEmployeeNo(employeeNo);
 	}
 
-	public List<OrderDetail> getOrderDetail(int orderId) {
-		return orderDetailDAO.select(orderId);
+	public Map<Boolean, List<Order>> getOrderMap() {
+		List<Order> orders = orderDAO.selectAll();
+		setOrderDetails(orders);
+
+		Map<Boolean, List<Order>> orderMap = new HashMap<>();
+		orderMap.put(true, new ArrayList<>());
+		orderMap.put(false, new ArrayList<>());
+
+		for (Order order : orders) {
+			orderMap.get(order.isOrderStatus()).add(order);
+		}
+
+		return orderMap;
 	}
 
 	public boolean changeOrderStatus(Order order) {
-		return orderDAO.updateOrderStatus(order.getOrderId(), order.getOrderStatus());
+		return orderDAO.updateOrderStatus(order.getOrderId(), order.isOrderStatus());
+	}
+
+	private void setOrderDetails(List<Order> orders) {
+		int orderCount = orders.size();
+		for (int i = 0; i < orderCount; i++) {
+			List<OrderDetail> orderDetails = orderDetailDAO.select(orders.get(i).getOrderId());
+			orders.get(i).setOrderDetails(orderDetails);
+		}
 	}
 }

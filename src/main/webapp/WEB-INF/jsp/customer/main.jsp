@@ -18,6 +18,20 @@
             margin: 10px;
         }
 
+        td {
+            text-align: center;
+        }
+
+        .ice_lbl {
+            color: blue;
+            font-weight: bold;
+        }
+
+        .hot_lbl {
+            color: red;
+            font-weight: bold;
+        }
+
         .menu_count_input {
             ime-mode: disabled;
             text-align: center;
@@ -26,7 +40,7 @@
 </head>
 <body>
 <div id="top_nav_div">
-    <img id="top_nav_img" src="/image/top_nav.png"/>
+    <img id="top_nav_img" src="/image/customer/top_nav.png"/>
 </div>
 
 <div id="cafe_info_div">
@@ -43,7 +57,7 @@
 
     <div>
         <!-- 서버에서 내려주는 상태 보고 위젝 선택, 현재는 임시로 여유 -->
-        <img id="cafe_status_widget_img" src="/image/widget_spare.png"/>
+        <img id="cafe_status_widget_img" src="/image/customer/widget_spare.png"/>
     </div>
 </div>
 
@@ -126,8 +140,10 @@
                         </tr>
                         </tfoot>
                     </table>
-                    <input type="button" id="order_submit_btn" value="주문 하기"/>
-                    <input type="button" value="이용 내역 조회" onclick=""/>
+                    <div>
+                        <input type="button" id="order_submit_btn" value="주문 하기"/>
+                        <input type="button" value="이용 내역 조회" onclick=""/>
+                    </div>
                 </form>
             </div>
         </div>

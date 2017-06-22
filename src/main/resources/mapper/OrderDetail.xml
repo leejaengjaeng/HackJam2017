@@ -4,13 +4,29 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.hackjam.dao.OrderDetailDAO">
-	<select id="select" resultType="OrderDetail" parameterType="int">
+	<resultMap id="menuResultMap" type="Menu">
+		<id column="menu_id" property="menuId"/>
+		<result column="menu_name" property="menuName"/>
+	</resultMap>
+
+	<resultMap id="orderDetailResultMap" type="OrderDetail">
+		<result column="order_id" property="orderId"/>
+		<result column="count" property="count"/>
+		<association property="menu" resultMap="menuResultMap"/>
+	</resultMap>
+
+	<select id="select" resultMap="orderDetailResultMap" parameterType="int">
 		SELECT
 			order_id,
-			menu_id,
+			m.menu_id,
+			m.menu_name,
 			count
 		FROM
-			order_detail
+			order_detail o_d
+		JOIN
+			menu m
+		ON
+			o_d.menu_id = m.menu_id
 		WHERE
 			order_id = #{orderId}
 	</select>
@@ -29,13 +45,13 @@
 		 <foreach collection="orderDetails"  item="orderDetail" separator=",">
             (
                 #{orderId},
-                #{orderDetail.menuId},
+                #{orderDetail.menu.menuId},
                 #{orderDetail.count},
                 (
                     SELECT cost
                     FROM menu
                     WHERE
-                        menu_id = #{orderDetail.menuId}
+                        menu_id = #{orderDetail.menu.menuId}
                 ) * #{orderDetail.count},
 			 	#{orderDetail.hot}
             )

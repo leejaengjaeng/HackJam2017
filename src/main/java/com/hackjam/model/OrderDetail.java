@@ -5,7 +5,7 @@ package com.hackjam.model;
  */
 public class OrderDetail {
 	private int orderId;
-	private int menuId;
+	private Menu menu;
 	private int count;
 	private boolean hot;
 
@@ -17,12 +17,12 @@ public class OrderDetail {
 		this.orderId = orderId;
 	}
 
-	public int getMenuId() {
-		return menuId;
+	public Menu getMenu() {
+		return menu;
 	}
 
-	public void setMenuId(int menuId) {
-		this.menuId = menuId;
+	public void setMenu(Menu menu) {
+		this.menu = menu;
 	}
 
 	public int getCount() {
