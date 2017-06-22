@@ -11,6 +11,7 @@ buildscript {
 }
 
 apply plugin: 'java'
+apply plugin: 'scala'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'war'
@@ -29,18 +30,17 @@ configurations {
 }
 
 dependencies {
+    //라인 봇
     compile('com.linecorp.bot:line-bot-spring-boot:1.8.0')
 
-    compile('org.springframework.boot:spring-boot-starter-web')
+    //스프링
+    //compile('org.springframework.boot:spring-boot-starter-web')
+    //testCompile('org.springframework.boot:spring-boot-starter-test')
     providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
-    testCompile('org.springframework.boot:spring-boot-starter-test')
-
-    //형태소 분석
-    compile group: 'org.openkoreantext', name: 'open-korean-text', version: '2.0.2'
 
     // jsp & jstl
-    compile 'javax.servlet:jstl'
     compile 'org.apache.tomcat.embed:tomcat-embed-jasper'
+    compile 'javax.servlet:jstl'
     compile 'jstl:jstl:1.2'
 
     // DB
@@ -51,4 +51,11 @@ dependencies {
 
     // 재실행 없이 resources update를 위함
     compile('org.springframework.boot:spring-boot-devtools')
+
+    //형태소 분석
+    compile fileTree(dir:'lib',include:['*.jar'])
+    compile group: 'org.scala-lang', name: 'scala-library', version: '2.12.1'
+    compile group: 'com.twitter', name: 'twitter-text', version: '1.14.3'
+
+
 }

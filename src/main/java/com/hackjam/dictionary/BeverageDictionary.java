@@ -1,7 +1,6 @@
 package com.hackjam.dictionary;
-
 /**
- * Created by naver on 2017. 6. 18..
+ * Created by Jaeyoung Lee on 2017. 6. 18..
  */
 
 //TODO: DB에 넣고 지우기

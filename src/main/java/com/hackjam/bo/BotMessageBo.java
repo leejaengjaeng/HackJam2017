@@ -3,6 +3,7 @@ package com.hackjam.bo;
 import com.hackjam.util.KoreanTextMiner;
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.model.event.Event;
+import com.linecorp.bot.model.event.JoinEvent;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.StickerMessage;
@@ -19,7 +20,7 @@ import java.util.List;
 
 
 /**
- * Created by naver on 2017. 6. 18..
+ * Created by Jaeyoung Lee on 2017. 6. 18..
  */
 @Service
 public class BotMessageBo {
@@ -64,6 +65,14 @@ public class BotMessageBo {
 
         return testReturnString.toString();
     }
+
+    public TextMessage replyJoinEvent(JoinEvent event){
+        String senderId = event.getSource().getSenderId();
+        String helloText = senderId+"님 주문하시겠어요?";
+
+        return new TextMessage(helloText);
+    }
+
 
     public TextMessage replyTextEvent(MessageEvent<TextMessageContent> textEvent){
 

@@ -1,7 +1,7 @@
 package com.hackjam.dictionary;
 
 /**
- * Created by naver on 2017. 6. 18..
+ * Created by Jaeyoung Lee on 2017. 6. 18..
  */
 
 public enum TemperatureDictionary {
