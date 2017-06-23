@@ -31,4 +31,12 @@ public enum TemperatureDictionary {
     public String[] getSameMeanings() {
         return sameMeaningList.split(sameMeaningSeperator);
     }
+
+
+    public static String getKoreanWordHotIfTrue(boolean input){
+        if(input == COLD.isMeanHot){
+            return COLD.message;
+        }
+        return HOT.message;
+    }
 }

@@ -10,8 +10,135 @@
 <html>
 <head>
     <title>Staff Main</title>
+    <link rel="stylesheet" href="/style/css/bootstrap.css">
+    <link rel="stylesheet" href="/style/css/wondo.css">
 </head>
 <body>
-Staff Main Page
+<div class="wondo_container">
+    <div>
+        <!-- Title Image -->
+    </div>
+
+    <div class="send_orders">
+        <div class="category_title_div">
+            <label class="category_title_lbl">요청 받은 주문</label>
+        </div>
+        <c:forEach var="order" items="${orderMap['send']}">
+            <div class="send_order">
+                <input type="hidden" class="order_id_hidden" value="${order.orderId}"/>
+                <input type="hidden" class="order_status_hidden" value="${order.status}"/>
+
+                <div>
+                        ${order.employee.employeeName}(${order.employee.employeeNo})
+                        ${order.orderYmdt}
+                </div>
+
+                <c:set var="menuCount" value="0"/>
+                <c:forEach var="orderDetail" items="${order.orderDetails}">
+                    <div>
+                        <c:if test="${orderDetail.hot}">
+                            <lable class="hot_lbl">HOT</lable>
+                        </c:if>
+                        <c:if test="${orderDetail.hot == false}">
+                            <lable class="ice_lbl">ICE</lable>
+                        </c:if>
+                        <label class="menu_name_lbl">
+                                ${orderDetail.menu.menuName}
+                                ${orderDetail.count}잔
+                        </label>
+                    </div>
+                    <c:set var="menuCount" value="${menuCount+orderDetail.count}"/>
+                </c:forEach>
+                <br/>
+                <div>
+                    <label>총 음료 ${menuCount}잔</label><br>
+                    <label>${order.cost}원</label>
+                </div>
+            </div>
+        </c:forEach>
+    </div>
+
+    <div class="undone_orders">
+        <div class="category_title_div">
+            <label class="category_title_lbl">진행중인 주문</label>
+        </div>
+        <c:forEach var="order" items="${orderMap['receive']}">
+            <div class="undone_order">
+                <input type="hidden" class="order_id_hidden" value="${order.orderId}"/>
+                <input type="hidden" class="order_status_hidden" value="${order.status}"/>
+
+                <div>
+                        ${order.employee.employeeName}(${order.employee.employeeNo})
+                        ${order.orderYmdt}
+                </div>
+
+                <c:set var="menuCount" value="0"/>
+                <c:forEach var="orderDetail" items="${order.orderDetails}">
+                    <div>
+                        <c:if test="${orderDetail.hot}">
+                            <lable class="hot_lbl">HOT</lable>
+                        </c:if>
+                        <c:if test="${orderDetail.hot == false}">
+                            <lable class="ice_lbl">ICE</lable>
+                        </c:if>
+                        <label class="menu_name_lbl">
+                                ${orderDetail.menu.menuName}
+                                ${orderDetail.count}잔
+                        </label>
+                    </div>
+                    <c:set var="menuCount" value="${menuCount+orderDetail.count}"/>
+                </c:forEach>
+                <br/>
+                <div>
+                    <label>총 음료 ${menuCount}잔</label><br>
+                    <label>${order.cost}원</label>
+                </div>
+            </div>
+        </c:forEach>
+    </div>
+
+    <div class="done_orders">
+        <div class="category_title_div">
+            <label class="category_title_lbl">완료된 주문</label>
+        </div>
+        <c:forEach var="order" items="${orderMap['done']}">
+            <div class="done_order">
+                <input type="hidden" class="order_id_hidden" value="${order.orderId}"/>
+                <input type="hidden" class="order_status_hidden" value="${order.status}"/>
+
+                <div>
+                        ${order.employee.employeeName}(${order.employee.employeeNo})
+                        ${order.orderYmdt}
+                </div>
+
+                <c:set var="menuCount" value="0"/>
+                <c:forEach var="orderDetail" items="${order.orderDetails}">
+                    <div>
+                        <c:if test="${orderDetail.hot}">
+                            <lable class="hot_lbl">HOT</lable>
+                        </c:if>
+                        <c:if test="${orderDetail.hot == false}">
+                            <lable class="ice_lbl">ICE</lable>
+                        </c:if>
+                        <label class="menu_name_lbl">
+                                ${orderDetail.menu.menuName}
+                                ${orderDetail.count}잔
+                        </label>
+                    </div>
+                    <c:set var="menuCount" value="${menuCount+orderDetail.count}"/>
+                </c:forEach>
+                <br/>
+                <div>
+                    <label>총 음료 ${menuCount}잔</label><br>
+                    <label>${order.cost}원</label>
+                </div>
+            </div>
+        </c:forEach>
+    </div>
+</div>
+
+<script type="text/javascript" src="/js/jquery.js"></script>
+<script src="/js/staff/staff.js"></script>
+<script type="text/javascript" src="/js/bootstrap/bootstrap.js"></script>
 </body>
 </html>

@@ -2,6 +2,8 @@ package com.hackjam.bo;
 
 import com.hackjam.constant.BotOrderStep;
 import com.hackjam.constant.WordType;
+import com.hackjam.dictionary.BeverageDictionary;
+import com.hackjam.dictionary.TemperatureDictionary;
 import com.hackjam.model.Order;
 import com.hackjam.model.OrderDetail;
 import com.hackjam.util.KoreanTextMiner;
@@ -40,32 +42,16 @@ public class BotOrderProcessBo {
 		currentUsers.put(userId,step);
 	}
 
-	int count = 1;
 	public Message replySuitableMessage(MessageEvent<TextMessageContent> event){
 		String userId = event.getSource().getUserId();
-		count++;
-		if(count%2==0)
-			return botMessageUtil.replyTextEvent("한글이 안나오니");
-		else{
-			BotOrderStep currentStep = currentUsers.get(userId);
-			logger.debug("###input : "+event.getMessage().getText());
-
-			return goSuitableNextStep(currentStep,event.getMessage().getText());
-		}
-		//BotOrderStep currentStep = currentUsers.get(userId);
-		//return goSuitableNextStep(currentStep,event.getMessage().getText());
-	}
-
-	public Message tttt(String input){
-		return botMessageUtil.replyTextEvent("dddddd");
+		BotOrderStep currentStep = currentUsers.get(userId);
+		return goSuitableNextStep(currentStep,event.getMessage().getText());
 	}
 
 	public Message goSuitableNextStep(BotOrderStep step, String userInput){
-		logger.error("1");
 		if(step == null){
 			step = BotOrderStep.HELLO;
 		}
-		logger.error("2");
 
 		switch (step){
 			case HELLO:
@@ -79,9 +65,9 @@ public class BotOrderProcessBo {
 				logger.error("3");
 
 				List<OrderDetail> orders = generateOrder(userInput);
-				String a = "";
+				String a = "_\n";
 				for(OrderDetail order : orders){
-					a+= order.isHot()+" "+order.getMenuId() + " "+order.getCount() + "\n";
+					a+= TemperatureDictionary.getKoreanWordHotIfTrue(order.isHot())+" "+ BeverageDictionary.getOriginalNameFromMenuId(order.getMenuId()) + " "+order.getCount() + "\n";
 				}
 				logger.error("#####\n###"+a);
 				return botMessageUtil.replyTextEvent(a);
@@ -89,7 +75,7 @@ public class BotOrderProcessBo {
 	}
 
 	private List<OrderDetail> generateOrder(String userInput) {
-		logger.error("4$$$userInput\n"+userInput);
+		logger.error("4\n"+userInput);
 
 		List<KoreanToken> tokens = textMiner.getTokenListFromString(userInput);
 		List<OrderDetail> completeOrders = new ArrayList<>();
@@ -109,7 +95,7 @@ public class BotOrderProcessBo {
 					currentMenu.setMenuId(menuId);
 					break;
 				case NUMBER:
-					int quantity = Integer.parseInt(token.text());
+					int quantity = textMiner.getNumberFromKoreanNumber(token.text());
 					currentMenu.setCount(quantity);
 					break;
 				case HANGUL_NUMBER:
@@ -130,6 +116,7 @@ public class BotOrderProcessBo {
 			if (currentMenu.isDoneOrder()) {
 				completeOrders.add(currentMenu.clone());
 				currentMenu.setEmpty();
+				logger.error(completeOrders.size()+" ");
 			}
 		}
 		//TODO: 뭔가 처리

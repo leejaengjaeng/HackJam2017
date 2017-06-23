@@ -63,4 +63,13 @@ public enum BeverageDictionary {
     public String[] getSameNames(){
         return sameNamesWithSeperator.split(SAME_NAME_SEPERATOR);
     }
+
+    public static String getOriginalNameFromMenuId(int menuId){
+        for(BeverageDictionary beverage : BeverageDictionary.values()){
+            if(beverage.id == menuId){
+                return beverage.originalName;
+            }
+        }
+        return "";
+    }
 }

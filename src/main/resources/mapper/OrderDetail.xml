@@ -7,12 +7,20 @@
 	<select id="select" resultType="OrderDetail" parameterType="int">
 		SELECT
 			order_id,
-			menu_id,
-			count
+			m.menu_id,
+			m.menu_name,
+			count,
+			hot
 		FROM
-			order_detail
+			order_detail o_d
+		JOIN
+			menu m
+		ON
+			o_d.menu_id = m.menu_id
 		WHERE
 			order_id = #{orderId}
+		ORDER BY
+			menu_id ASC
 	</select>
 
 	<insert id="insert" parameterType="Map">
@@ -29,13 +37,13 @@
 		 <foreach collection="orderDetails"  item="orderDetail" separator=",">
             (
                 #{orderId},
-                #{orderDetail.menuId},
+                #{orderDetail.menu.menuId},
                 #{orderDetail.count},
                 (
                     SELECT cost
                     FROM menu
                     WHERE
-                        menu_id = #{orderDetail.menuId}
+                        menu_id = #{orderDetail.menu.menuId}
                 ) * #{orderDetail.count},
 			 	#{orderDetail.hot}
             )
@@ -44,24 +52,4 @@
 			count = VALUES(count),
 			cost = VALUES(cost)
 	</insert>
-
-    <!--
-    <delete id="delete" parameterType="OrderDetail">
-        DELETE
-        FROM
-            order_detail
-        WHERE
-            order_id = #{orderId}
-        AND
-            menu_id = #{menuId}
-    </delete>
-
-    <delete id="deleteByOrderId" parameterType="int">
-        DELETE
-        FROM
-            order_detail
-        WHERE
-            order_id = #{orderId}
-    </delete>
-    -->
 </mapper>

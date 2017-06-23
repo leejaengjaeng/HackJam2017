@@ -12,6 +12,16 @@ public class Menu {
 	private String imageName;
 	private MenuType menuType;
 
+	public Menu(){}
+
+	public Menu(int menuId, String menuName, int cost, String imageName, MenuType menuType) {
+		this.menuId = menuId;
+		this.menuName = menuName;
+		this.cost = cost;
+		this.imageName = imageName;
+		this.menuType = menuType;
+	}
+
 	public int getMenuId() {
 		return menuId;
 	}
@@ -50,5 +60,9 @@ public class Menu {
 
 	public void setMenuType(MenuType menuType) {
 		this.menuType = menuType;
+	}
+
+	public Menu clone(){
+		return new Menu(menuId,menuName,cost,imageName,menuType);
 	}
 }

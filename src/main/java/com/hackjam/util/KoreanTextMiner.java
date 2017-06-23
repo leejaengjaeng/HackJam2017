@@ -182,8 +182,4 @@ public final class KoreanTextMiner {
         return orderDetail;
     }
 
-
-
-
-
 }

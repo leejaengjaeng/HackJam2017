@@ -6,13 +6,13 @@ $(function () {
     // HOT/ICE html 추가
     $('.menu_table > tbody').append(
         '<tr class="menu_hot_tr">' +
-        '<td><label>HOT</label></td>' +
+        '<td><label class="hot_lbl">HOT</label></td>' +
         '<td><button class="sub_btn">-</button></td>' +
         '<td><input type="text" class="menu_count_input"/></td>' +
         '<td><button class="add_btn">+</button></td>' +
         '</tr>' +
         '<tr class="menu_ice_tr">' +
-        '<td><label>ICE</label></td>' +
+        '<td><label class="ice_lbl">ICE</label></td>' +
         '<td><button class="sub_btn">-</button></td>' +
         '<td><input type="text" class="menu_count_input"/></td>' +
         '<td><button class="add_btn">+</button></td>' +
@@ -113,13 +113,30 @@ $(function () {
     $('#order_submit_btn').on('click', function () {
         var orderArray = $('#order_detail_table_body tr');
         $(orderArray).each(function (idx, element) {
-            changeParameterName(idx, element, 'menu_id_hidden');
-            changeParameterName(idx, element, 'is_hot_hidden');
-            changeParameterName(idx, element, 'menu_count_input');
-
+            changeParameterName(idx, element, '.menu_id_hidden');
+            changeParameterName(idx, element, '.is_hot_hidden');
+            changeParameterName(idx, element, '.menu_count_input');
         })
 
-        $('#order_detail_form').submit();
+        var form = $('#order_detail_form');
+        $.ajax({
+            type: 'POST',
+            url: '/order/confirm',
+            data: form.serialize(),
+            success: function (message) {
+                if (confirm(message + '\n위의 사항으로 주문하시겠습니까?')) {
+                    form.submit();
+                } else {
+                    revertParameterName('.menu_id_hidden');
+                    revertParameterName('.is_hot_hidden');
+                    revertParameterName('.menu_count_input');
+                }
+            }, error: function () {
+                alert('error');
+            }
+        });
+
+
     })
 
     // update
@@ -134,10 +151,11 @@ $(function () {
             var menuName = $(tbody).find('.menu_name_hidden').val();
             var newRow = '<tr id="' + rowId + '"> <input type="hidden" class="order_detail_cost_hidden" value="' + count + '"/> ' +
                 '<input type="hidden" class="order_detail_total_cost_hidden" value="' + (menuCost * count) + '"/> ' +
-                '<input type="hidden" class="menu_id_hidden" name="menuId" value="' + menuId + '"/>' +
+                '<input type="hidden" class="menu_id_hidden" name="menu.menuId" value="' + menuId + '"/>' +
                 '<input type="hidden" class="is_hot_hidden" name="hot" value="' + isHot + '"/>';
 
-            var orderTemperature = '<td><label>' + menuTemperature + '</label>';
+            var lblClassName = isHot ? 'hot_lbl' : 'ice_lbl';
+            var orderTemperature = '<td><label class="' + lblClassName + '">' + menuTemperature + '</label>';
             var orderDetailMenu = '<td><label class="order_detail_menu_name">' + menuName + '</label></td>';
             var orderDetailCount = '<td><input type="text" class="menu_count_input" name="count" value="' + count + '"/></td>';
             var removeBtn = '<td><input type="button" class="order_detail_remove_btn" value="삭제"/></td>';
@@ -192,9 +210,20 @@ $(function () {
         }
     }
 
-    function changeParameterName(idx, element, className) {
+    function changeParameterName(idx, element, elementName) {
         var prefix = 'orderDetails[' + idx + '].';
-        var target = $(element).find('.' + className);
+        var target = $(element).find(elementName);
         target.prop('name', prefix + target.prop('name'));
+    }
+
+    function revertParameterName(elementName) {
+        if (elementName === '.menu_id_hidden') {
+            $(elementName).prop('name', 'menu.menuId');
+        }
+        else if (elementName === '.is_hot_hidden') {
+            $(elementName).prop('name', 'hot');
+        } else if (elementName === '.menu_count_input') {
+            $(elementName).prop('name', 'count');
+        }
     }
 })

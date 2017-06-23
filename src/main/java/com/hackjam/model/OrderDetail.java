@@ -5,14 +5,14 @@ package com.hackjam.model;
  */
 public class OrderDetail {
 	private int orderId;
-	private int menuId;
+	private Menu menu;
 	private int count;
 	private boolean hot;
 
 	public OrderDetail(){}
-	public OrderDetail(int orderId, int menuId, int count, boolean hot){
+	public OrderDetail(int orderId, Menu menu, int count, boolean hot){
 		this.orderId = orderId;
-		this.menuId = menuId;
+		this.menu = menu;
 		this.count = count;
 		this.hot = hot;
 	}
@@ -25,12 +25,12 @@ public class OrderDetail {
 		this.orderId = orderId;
 	}
 
-	public int getMenuId() {
-		return menuId;
+	public Menu getMenu() {
+		return menu;
 	}
 
-	public void setMenuId(int menuId) {
-		this.menuId = menuId;
+	public void setMenu(Menu menu) {
+		this.menu = menu;
 	}
 
 	public int getCount() {
@@ -49,29 +49,52 @@ public class OrderDetail {
 		this.hot = hot;
 	}
 
+	public void setMenuId(int menuId) {
+		if (menu == null) {
+			menu = new Menu();
+		}
+		menu.setMenuId(menuId);
+	}
+
+	public int getMenuId(){
+		if(menu == null){
+			return 0;
+		}
+		return menu.getMenuId();
+	}
+
+	public void setMenuName(String menuName) {
+		if (menu == null) {
+			menu = new Menu();
+		}
+		menu.setMenuName(menuName);
+	}
+
 	public void setEmpty(){
-		menuId=0;
+		menu=null;
 		count=0;
 	}
+
 	public boolean isDoneOrder(){
-		if(menuId!=0 && count!=0){
+		if(menu !=null && count!=0){
 			return true;
 		}
 		return false;
 	}
 	public boolean isEmpty(){
-		if(menuId ==0 && count ==0){
+		if(menu ==null && count ==0){
 			return true;
 		}
 		return false;
 	}
 
 	public OrderDetail clone(){
-		return new OrderDetail(orderId,menuId,count,hot);
+		return new OrderDetail(orderId,menu.clone(),count,hot);
 	}
 
+
 	public boolean setFieldsDefault(){
-		if(menuId==0){
+		if(menu==null){
 			return false;
 		}
 		if(count==0){
@@ -79,4 +102,5 @@ public class OrderDetail {
 		}
 		return true;
 	}
+
 }
