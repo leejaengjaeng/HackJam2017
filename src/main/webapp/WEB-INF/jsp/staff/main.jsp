@@ -10,33 +10,18 @@
 <html>
 <head>
     <title>Staff Main</title>
-    <script type="text/javascript" src="/js/jquery.js"></script>
-    <style type="text/css">
-        .send_order {
-            display: inline-block;
-            margin: 20px;
-        }
-
-        .undone_order {
-            display: inline-block;
-            margin: 20px;
-        }
-
-        .done_order {
-            display: inline-block;
-            margin: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="/style/css/bootstrap.css">
+    <link rel="stylesheet" href="/style/css/wondo.css">
 </head>
 <body>
-<div>
+<div class="wondo_container">
     <div>
         <!-- Title Image -->
     </div>
 
     <div class="send_orders">
-        <div class="orders_title">
-            <label>요청 받은 주문</label>
+        <div class="category_title_div">
+            <label class="category_title_lbl">요청 받은 주문</label>
         </div>
         <c:forEach var="order" items="${orderMap['send']}">
             <div class="send_order">
@@ -58,8 +43,8 @@
                             <lable class="ice_lbl">ICE</lable>
                         </c:if>
                         <label class="menu_name_lbl">
-                            ${orderDetail.menu.menuName}
-                            ${orderDetail.count}잔
+                                ${orderDetail.menu.menuName}
+                                ${orderDetail.count}잔
                         </label>
                     </div>
                     <c:set var="menuCount" value="${menuCount+orderDetail.count}"/>
@@ -74,8 +59,8 @@
     </div>
 
     <div class="undone_orders">
-        <div class="orders_title">
-            <label>진행중인 주문</label>
+        <div class="category_title_div">
+            <label class="category_title_lbl">진행중인 주문</label>
         </div>
         <c:forEach var="order" items="${orderMap['receive']}">
             <div class="undone_order">
@@ -113,8 +98,8 @@
     </div>
 
     <div class="done_orders">
-        <div class="orders_title">
-            <label>완료된 주문</label>
+        <div class="category_title_div">
+            <label class="category_title_lbl">완료된 주문</label>
         </div>
         <c:forEach var="order" items="${orderMap['done']}">
             <div class="done_order">
@@ -152,6 +137,8 @@
     </div>
 </div>
 
+<script type="text/javascript" src="/js/jquery.js"></script>
 <script src="/js/staff/staff.js"></script>
+<script type="text/javascript" src="/js/bootstrap/bootstrap.js"></script>
 </body>
 </html>

@@ -1,0 +1,49 @@
+.wondo_container{
+    text-align: center;
+}
+.category_title_div{
+    text-align: center;
+}
+
+.category_title_lbl{
+    font-size:20px;
+}
+
+.send_order {
+    display: inline-block;
+    margin: 20px;
+}
+
+.undone_order {
+    display: inline-block;
+    margin: 20px;
+}
+
+.done_order {
+    display: inline-block;
+    margin: 20px;
+}
+
+.menu_table {
+    display: inline-block;
+    margin: 10px;
+}
+
+td {
+    text-align: center;
+}
+
+.ice_lbl {
+    color: blue;
+    font-weight: bold;
+}
+
+.hot_lbl {
+    color: red;
+    font-weight: bold;
+}
+
+.menu_count_input {
+    ime-mode: disabled;
+    text-align: center;
+}
