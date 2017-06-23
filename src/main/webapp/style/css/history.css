@@ -1,0 +1,22 @@
+.title_div {
+    margin-bottom: 5px;
+    font-weight: bold;
+    padding-bottom: 5px;
+    font-size: 17px;
+}
+
+button {
+    overflow: auto;
+    width: 250px;
+    height: 200px;
+    margin: 10px;
+}
+
+button label {
+    font-size: 15px;
+}
+
+.undone_order_tag_div {
+    background-color: #faf2cc;
+}
+

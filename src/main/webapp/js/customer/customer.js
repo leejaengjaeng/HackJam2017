@@ -149,7 +149,7 @@ $(function () {
         var rowId = menuId + '_' + menuTemperature;
         if ($('#' + rowId).length <= 0) {
             var menuName = $(tbody).find('.menu_name_hidden').val();
-            var newRow = '<tr id="' + rowId + '"> <input type="hidden" class="order_detail_cost_hidden" value="' + count + '"/> ' +
+            var newRow = '<tr id="' + rowId + '"> <input type="hidden" class="order_detail_cost_hidden" value="' + menuCost + '"/> ' +
                 '<input type="hidden" class="order_detail_total_cost_hidden" value="' + (menuCost * count) + '"/> ' +
                 '<input type="hidden" class="menu_id_hidden" name="menu.menuId" value="' + menuId + '"/>' +
                 '<input type="hidden" class="is_hot_hidden" name="hot" value="' + isHot + '"/>';

@@ -1,0 +1,29 @@
+.send_orders{
+    margin-bottom: 70px;
+}
+
+.undone_orders{
+    margin-bottom: 70px;
+}
+
+.done_orders{
+    margin-bottom: 70px;
+}
+
+button{
+    overflow: auto;
+    width: 250px;
+    height: 200px;
+    margin: 10px;
+}
+
+button label{
+    font-size: 15px;
+}
+
+.user_div{
+    margin-bottom: 5px;
+    font-weight: bold;
+    padding-bottom: 5px;
+    font-size: 17px;
+}

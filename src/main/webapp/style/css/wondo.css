@@ -1,12 +1,75 @@
-.wondo_container{
-    text-align: center;
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+#order_detail_table td {
+    padding: 5px;
 }
-.category_title_div{
+
+.menu_table td {
+    padding: 3px;
+}
+
+.menu_table {
+    width: 200px;
+}
+
+.menu_count_input {
+    width: 100px;
+}
+
+.menu_img {
+    width: 200px;
+    height: 250px;
+}
+
+.order_detail_container_div {
+    text-align: center;
+    display: inline-block;
+    float: right;
+    margin-top: 100px;
+    margin-right: 50px;
+}
+
+.menu_container_div {
+    margin-top: 40px;
+    margin-bottom: 70px;
+}
+
+.top_nav_div {
+    margin-bottom: 100px;
+}
+
+#cafe_status_widget_img {
+    max-width: 200px;
+}
+
+#cafe_status_div {
+    text-align: right;
+    display: inline-block;
+}
+
+#cafe_operation_time {
+    text-align: left;
+    width: 70%;
+    display: inline-block;
+}
+
+#cafe_info_div {
+    vertical-align: middle;
+}
+
+.wondo_container {
+    margin-top: 100px;
+    text-align: center;
+    font-family: 'Nanum Gothic', sans-serif;
+}
+
+.category_title_div {
     text-align: center;
 }
 
-.category_title_lbl{
-    font-size:20px;
+.category_title_lbl {
+    font-size: 20px;
+    text-decoration: underline;
 }
 
 .send_order {
@@ -46,4 +109,42 @@ td {
 .menu_count_input {
     ime-mode: disabled;
     text-align: center;
+}
+
+.order_btn {
+    background-color: #00c73c;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    margin-right: 12px;
+}
+
+.order_detail_remove_btn {
+    margin-left: 10px;
+    background-color: #00c73c;
+    border: none;
+    color: white;
+    padding: 3px 13px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+}
+
+#order_detail_table {
+    width: 450px;
+}
+
+#order_detail_table .menu_count_input {
+    margin-left: 40px;
+}
+
+.order_detail_underline {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: 450px;
 }
