@@ -23,7 +23,10 @@
 			menu_name,
 			cost,
 			image_name,
-			UPPER(menu_type) AS menu_type
+			UPPER(menu_type) AS menu_type,
+			on_sale,
+			same_names_with_seperator,
+			default_temperature
 		FROM
 			menu
 	</select>

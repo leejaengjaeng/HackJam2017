@@ -7,5 +7,8 @@ public enum BotOrderStep {
 	HELLO,
 	READY,
 	ORDER_START,
-	ORDER_MORE;
+	ORDER_MORE,
+	ORDER_DONE,
+	CALL_USER,
+	CANT_ANSWER
 }

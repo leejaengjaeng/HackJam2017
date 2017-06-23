@@ -3,18 +3,19 @@ package com.hackjam.model;
 import java.util.Date;
 import java.util.List;
 
+import com.hackjam.util.DateUtils;
+
 /**
  * Created by naver on 2017. 6. 18..
  */
 public class Order {
-	List<OrderedBeverage> orderList;
 	private List<OrderDetail> orderDetails;
 	private int orderId;
-	private String employeeNo;
+	private Employee employee;
 	private int cost;
 	private Date orderYmdt;
 	private Date finishYmdt;
-	private int orderStatus;
+	private int status;
 
 	public List<OrderDetail> getOrderDetails() {
 		return orderDetails;
@@ -32,12 +33,12 @@ public class Order {
 		this.orderId = orderId;
 	}
 
-	public String getEmployeeNo() {
-		return employeeNo;
+	public Employee getEmployee() {
+		return employee;
 	}
 
-	public void setEmployeeNo(String employeeNo) {
-		this.employeeNo = employeeNo;
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 
 	public int getCost() {
@@ -48,27 +49,27 @@ public class Order {
 		this.cost = cost;
 	}
 
-	public Date getOrderYmdt() {
-		return orderYmdt;
+	public String getOrderYmdt() {
+		return DateUtils.formatYmdt(orderYmdt);
 	}
 
 	public void setOrderYmdt(Date orderYmdt) {
 		this.orderYmdt = orderYmdt;
 	}
 
-	public Date getFinishYmdt() {
-		return finishYmdt;
+	public String getFinishYmdt() {
+		return DateUtils.formatYmdt(finishYmdt);
 	}
 
 	public void setFinishYmdt(Date finishYmdt) {
 		this.finishYmdt = finishYmdt;
 	}
 
-	public int getOrderStatus() {
-		return orderStatus;
+	public int getStatus() {
+		return status;
 	}
 
-	public void setOrderStatus(int orderStatus) {
-		this.orderStatus = orderStatus;
+	public void setStatus(int status) {
+		this.status = status;
 	}
 }

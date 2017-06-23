@@ -1,6 +1,6 @@
 package com.hackjam.controller;
 
-import com.hackjam.bo.BotMessageBo;
+import com.hackjam.bo.BotMessageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     @Autowired
-    BotMessageBo botMessageBo;
+    BotMessageUtil botMessageBo;
 
     @RequestMapping("/test")
     public String test(@RequestParam String input){
