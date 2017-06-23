@@ -7,30 +7,45 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <html>
 <head>
     <title>Staff Main</title>
     <link rel="stylesheet" href="/style/css/bootstrap.css">
+    <link rel="stylesheet" href="/style/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/style/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/style/css/bootstrap-vertical-grid.css">
+    <link rel="stylesheet" href="/style/css/bootstrap-theme.css">
     <link rel="stylesheet" href="/style/css/wondo.css">
+    <link rel="stylesheet" href="/style/css/staff.css">
 </head>
 <body>
 <div class="wondo_container">
-    <div>
-        <!-- Title Image -->
+    <div class="top_nav_div">
+        <img id="top_nav_img" src="/image/logo.png"/>
     </div>
 
     <div class="send_orders">
         <div class="category_title_div">
             <label class="category_title_lbl">요청 받은 주문</label>
         </div>
-        <c:forEach var="order" items="${orderMap['send']}">
+
+        <c:if test="${fn:length(orderMap['send']) == 0}">
+            <div class="empty_order_div">
+                <h4>
+                    요청 받은 주문이 없습니다.
+                </h4>
+            </div>
+        </c:if>
+
+        <c:forEach var="order" items="${orderMap['send']}" varStatus="index">
             <div class="send_order">
                 <input type="hidden" class="order_id_hidden" value="${order.orderId}"/>
                 <input type="hidden" class="order_status_hidden" value="${order.status}"/>
 
-                <div>
-                        ${order.employee.employeeName}(${order.employee.employeeNo})
-                        ${order.orderYmdt}
+                <div class="user_div">
+                        ${order.employee.employeeName} ${order.orderYmdt}
                 </div>
 
                 <c:set var="menuCount" value="0"/>
@@ -56,20 +71,30 @@
                 </div>
             </div>
         </c:forEach>
+
+        <c:if test="${index==0}">
+            요청받은 주문이 없습니다.
+        </c:if>
     </div>
 
     <div class="undone_orders">
         <div class="category_title_div">
             <label class="category_title_lbl">진행중인 주문</label>
         </div>
-        <c:forEach var="order" items="${orderMap['receive']}">
+        <c:if test="${fn:length(orderMap['receive']) == 0}">
+            <div class="empty_order_div">
+                <h4>
+                    진행중인 주문이 없습니다.
+                </h4>
+            </div>
+        </c:if>
+        <c:forEach var="order" items="${orderMap['receive']}" varStatus="index">
             <div class="undone_order">
                 <input type="hidden" class="order_id_hidden" value="${order.orderId}"/>
                 <input type="hidden" class="order_status_hidden" value="${order.status}"/>
 
-                <div>
-                        ${order.employee.employeeName}(${order.employee.employeeNo})
-                        ${order.orderYmdt}
+                <div class="user_div">
+                        ${order.employee.employeeName} ${order.orderYmdt}
                 </div>
 
                 <c:set var="menuCount" value="0"/>
@@ -101,14 +126,20 @@
         <div class="category_title_div">
             <label class="category_title_lbl">완료된 주문</label>
         </div>
+        <c:if test="${fn:length(orderMap['done']) == 0}">
+            <div class="empty_order_div">
+                <h4>
+                    완료된 주문이 없습니다.
+                </h4>
+            </div>
+        </c:if>
         <c:forEach var="order" items="${orderMap['done']}">
             <div class="done_order">
                 <input type="hidden" class="order_id_hidden" value="${order.orderId}"/>
                 <input type="hidden" class="order_status_hidden" value="${order.status}"/>
 
-                <div>
-                        ${order.employee.employeeName}(${order.employee.employeeNo})
-                        ${order.orderYmdt}
+                <div class="user_div">
+                        ${order.employee.employeeName} ${order.orderYmdt}
                 </div>
 
                 <c:set var="menuCount" value="0"/>
