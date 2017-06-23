@@ -57,7 +57,8 @@
 
     <div>
         <!-- 서버에서 내려주는 상태 보고 위젝 선택, 현재는 임시로 여유 -->
-        <img id="cafe_status_widget_img" src="/image/customer/widget_spare.png"/>
+
+        <img id="cafe_status_widget_img" src="/image/customer/widget_${cafeStatus}.png"/>
     </div>
 </div>
 
@@ -73,7 +74,7 @@
                     <tbody>
                     <tr class="menu_img_tr">
                         <td colspan="4">
-                            <img class="menu_img" src="/image/${menu.imageName}"/>
+                            <img class="menu_img" src="/image/customer/${menu.imageName}"/>
                         </td>
                     </tr>
 
@@ -142,7 +143,7 @@
                     </table>
                     <div>
                         <input type="button" id="order_submit_btn" value="주문 하기"/>
-                        <input type="button" value="이용 내역 조회" onclick=""/>
+                        <input type="button" value="이용 내역 조회" onclick="location.href='/customer/orderHistory'"/>
                     </div>
                 </form>
             </div>

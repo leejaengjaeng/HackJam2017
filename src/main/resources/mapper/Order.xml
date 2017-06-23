@@ -15,7 +15,7 @@
         <result property="orderYmdt" column="order_ymdt"/>
         <result property="finishYmdt" column="finish_ymdt"/>
         <result property="cost" column="cost"/>
-        <result property="done" column="done"/>
+        <result property="status" column="status"/>
         <association property="employee" resultMap="employeeResultMap"/>
     </resultMap>
 
@@ -27,7 +27,7 @@
 			(SELECT SUM(cost) FROM order_detail where order_id = o.order_id) AS cost,
 			order_ymdt,
 			finish_ymdt,
-			done
+			status
 		FROM
 			`order` o
 		JOIN
@@ -46,27 +46,36 @@
 			(SELECT SUM(cost) FROM order_detail where order_id = o.order_id) AS cost,
 			order_ymdt,
 			finish_ymdt,
-			done
+			status
 		FROM
 			`order` o
 		JOIN
 			employee e
 		ON
 			o.employee_no = e.employee_no
+		ORDER BY
+			order_id DESC
 	</select>
 
-    <select id="selectAllByEmployeeNo" resultType="Order" parameterType="String">
+    <select id="selectAllByEmployeeNo" resultMap="orderResultMap" parameterType="String">
 		SELECT
 			order_id,
-			employee_no,
+			e.employee_no,
+			e.employee_name,
 			(SELECT SUM(cost) FROM order_detail where order_id = o.order_id) AS cost,
 			order_ymdt,
 			finish_ymdt,
-			done
+			status
 		FROM
 			`order` o
+		JOIN
+			employee e
+		ON
+			o.employee_no = e.employee_no
 		WHERE
-			employee_no = #{employeeNo}
+			o.employee_no = #{employeeNo}
+		ORDER BY
+			order_id DESC
 	</select>
 
     <insert id="insert" parameterType="Order" useGeneratedKeys="true" keyProperty="orderId">
@@ -75,12 +84,12 @@
 			`order` (
 			employee_no,
 			order_ymdt,
-			done
+			status
 		)
 		VALUES (
 			#{employee.employeeNo},
 			NOW(),
-			#{done}
+			#{status}
 		)
 	</insert>
 
@@ -88,7 +97,7 @@
 		UPDATE
 			`order`
 		SET
-			done = #{done}
+			status = #{status}
 		WHERE
 			order_id = #{orderId}
 	</update>

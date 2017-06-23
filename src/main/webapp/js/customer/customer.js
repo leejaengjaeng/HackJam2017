@@ -113,13 +113,30 @@ $(function () {
     $('#order_submit_btn').on('click', function () {
         var orderArray = $('#order_detail_table_body tr');
         $(orderArray).each(function (idx, element) {
-            changeParameterName(idx, element, 'menu_id_hidden');
-            changeParameterName(idx, element, 'is_hot_hidden');
-            changeParameterName(idx, element, 'menu_count_input');
-
+            changeParameterName(idx, element, '.menu_id_hidden');
+            changeParameterName(idx, element, '.is_hot_hidden');
+            changeParameterName(idx, element, '.menu_count_input');
         })
 
-        $('#order_detail_form').submit();
+        var form = $('#order_detail_form');
+        $.ajax({
+            type: 'POST',
+            url: '/order/confirm',
+            data: form.serialize(),
+            success: function (message) {
+                if (confirm(message + '\n위의 사항으로 주문하시겠습니까?')) {
+                    form.submit();
+                } else {
+                    revertParameterName('.menu_id_hidden');
+                    revertParameterName('.is_hot_hidden');
+                    revertParameterName('.menu_count_input');
+                }
+            }, error: function () {
+                alert('error');
+            }
+        });
+
+
     })
 
     // update
@@ -193,9 +210,20 @@ $(function () {
         }
     }
 
-    function changeParameterName(idx, element, className) {
+    function changeParameterName(idx, element, elementName) {
         var prefix = 'orderDetails[' + idx + '].';
-        var target = $(element).find('.' + className);
+        var target = $(element).find(elementName);
         target.prop('name', prefix + target.prop('name'));
+    }
+
+    function revertParameterName(elementName) {
+        if (elementName === '.menu_id_hidden') {
+            $(elementName).prop('name', 'menu.menuId');
+        }
+        else if (elementName === '.is_hot_hidden') {
+            $(elementName).prop('name', 'hot');
+        } else if (elementName === '.menu_count_input') {
+            $(elementName).prop('name', 'count');
+        }
     }
 })

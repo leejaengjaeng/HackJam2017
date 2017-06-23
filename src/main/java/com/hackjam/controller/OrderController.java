@@ -34,8 +34,14 @@ public class OrderController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value="/changeStatus", method = RequestMethod.POST)
-	public void changeStatus(Order order){
+	@RequestMapping(value = "/changeStatus", method = RequestMethod.POST)
+	public void changeStatus(Order order) {
 		orderBO.changeOrderStatus(order);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/confirm", method = RequestMethod.POST)
+	public String confirm(Order order) {
+		return orderBO.confirmMessage(order);
 	}
 }

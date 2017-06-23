@@ -4,23 +4,13 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.hackjam.dao.OrderDetailDAO">
-	<resultMap id="menuResultMap" type="Menu">
-		<id column="menu_id" property="menuId"/>
-		<result column="menu_name" property="menuName"/>
-	</resultMap>
-
-	<resultMap id="orderDetailResultMap" type="OrderDetail">
-		<result column="order_id" property="orderId"/>
-		<result column="count" property="count"/>
-		<association property="menu" resultMap="menuResultMap"/>
-	</resultMap>
-
-	<select id="select" resultMap="orderDetailResultMap" parameterType="int">
+	<select id="select" resultType="OrderDetail" parameterType="int">
 		SELECT
 			order_id,
 			m.menu_id,
 			m.menu_name,
-			count
+			count,
+			hot
 		FROM
 			order_detail o_d
 		JOIN
@@ -29,6 +19,8 @@
 			o_d.menu_id = m.menu_id
 		WHERE
 			order_id = #{orderId}
+		ORDER BY
+			menu_id ASC
 	</select>
 
 	<insert id="insert" parameterType="Map">
@@ -60,24 +52,4 @@
 			count = VALUES(count),
 			cost = VALUES(cost)
 	</insert>
-
-    <!--
-    <delete id="delete" parameterType="OrderDetail">
-        DELETE
-        FROM
-            order_detail
-        WHERE
-            order_id = #{orderId}
-        AND
-            menu_id = #{menuId}
-    </delete>
-
-    <delete id="deleteByOrderId" parameterType="int">
-        DELETE
-        FROM
-            order_detail
-        WHERE
-            order_id = #{orderId}
-    </delete>
-    -->
 </mapper>

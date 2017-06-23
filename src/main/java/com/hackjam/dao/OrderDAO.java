@@ -26,5 +26,5 @@ public interface OrderDAO {
 	boolean update(Order order);
 	*/
 
-	boolean updateOrderStatus(@Param("orderId") int orderId, @Param("done") boolean done);
+	boolean updateOrderStatus(@Param("orderId") int orderId, @Param("status") int status);
 }

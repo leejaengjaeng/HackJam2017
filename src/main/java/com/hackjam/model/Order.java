@@ -16,7 +16,7 @@ public class Order {
 	private int cost;
 	private Date orderYmdt;
 	private Date finishYmdt;
-	private boolean done;
+	private int status;
 
 	public List<OrderDetail> getOrderDetails() {
 		return orderDetails;
@@ -66,11 +66,11 @@ public class Order {
 		this.finishYmdt = finishYmdt;
 	}
 
-	public boolean isDone() {
-		return done;
+	public int getStatus() {
+		return status;
 	}
 
-	public void setDone(boolean done) {
-		this.done = done;
+	public void setStatus(int status) {
+		this.status = status;
 	}
 }

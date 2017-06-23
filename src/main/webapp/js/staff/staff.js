@@ -3,15 +3,21 @@
  */
 
 $(function () {
+    $(document).on('click', '.send_order', function () {
+        if (confirm('주문을 받으시겠습니까?')) {
+            changeOrder(this, 1);
+        }
+    });
+
     $(document).on('click', '.undone_order', function () {
         if (confirm('주문을 완료 처리하시겠습니까?')) {
-            changeOrder(this, true);
+            changeOrder(this, 2);
         }
     });
 
     $(document).on('click', '.done_order', function () {
         if (confirm('완료된 주문을 취소 처리하시겠습니까?')) {
-            changeOrder(this, false);
+            changeOrder(this, 1);
         }
     });
 
@@ -24,14 +30,14 @@ $(function () {
             url: '/order/changeStatus',
             data: {
                 'orderId': orderId,
-                'done': changeStatus
+                'status': changeStatus
             }, success: function () {
                 var moveClass
                 var html;
 
-                order.find('.order_done_hidden').val(changeStatus);
+                order.find('.order_status_hidden').val(changeStatus);
 
-                if(changeStatus == false){
+                if(changeStatus == 1){
                     moveClass = '.undone_orders';
                     html = '<div class="undone_order">'+order.html()+'</div>';
                 } else{

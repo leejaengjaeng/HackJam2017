@@ -40,4 +40,18 @@ public class OrderDetail {
 	public void setHot(boolean hot) {
 		this.hot = hot;
 	}
+
+	public void setMenuId(int menuId) {
+		if (menu == null) {
+			menu = new Menu();
+		}
+		menu.setMenuId(menuId);
+	}
+
+	public void setMenuName(String menuName) {
+		if (menu == null) {
+			menu = new Menu();
+		}
+		menu.setMenuName(menuName);
+	}
 }
