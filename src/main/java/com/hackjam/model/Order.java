@@ -9,7 +9,6 @@ import com.hackjam.util.DateUtils;
  * Created by naver on 2017. 6. 18..
  */
 public class Order {
-	List<OrderedBeverage> orderList;
 	private List<OrderDetail> orderDetails;
 	private int orderId;
 	private Employee employee;

@@ -11,6 +11,11 @@ public class Menu {
 	private int cost;
 	private String imageName;
 	private MenuType menuType;
+	private boolean onSale;
+	private String sameNamesWithSeperator;
+	private String defaultTemperature;
+
+	public static String NAME_SEPERATOR = ";";
 
 	public Menu(){}
 
@@ -60,6 +65,38 @@ public class Menu {
 
 	public void setMenuType(MenuType menuType) {
 		this.menuType = menuType;
+	}
+
+	public String getDefaultTemperature() {
+		return defaultTemperature;
+	}
+
+	public boolean isOnSale() {
+		return onSale;
+	}
+
+	public void setOnSale(boolean onSale) {
+		this.onSale = onSale;
+	}
+
+	public String getSameNamesWithSeperator() {
+		return sameNamesWithSeperator;
+	}
+
+	public void setSameNamesWithSeperator(String sameNamesWithSeperator) {
+		this.sameNamesWithSeperator = sameNamesWithSeperator;
+	}
+
+	public static String getNameSeperator() {
+		return NAME_SEPERATOR;
+	}
+
+	public static void setNameSeperator(String nameSeperator) {
+		NAME_SEPERATOR = nameSeperator;
+	}
+
+	public void setDefaultTemperature(String defaultTemperature) {
+		this.defaultTemperature = defaultTemperature;
 	}
 
 	public Menu clone(){

@@ -6,7 +6,7 @@ package com.hackjam.dictionary;
 
 public enum TemperatureDictionary {
     COLD(false,"차가운","차가운;찬;아이스;차갑게;시원한"),
-    HOT(true,"따뜻한","따뜻한;따듯한;따수운;따순;뜨겁게;");
+    HOT(true,"따뜻한","따뜻한;따듯한;따수운;따순;뜨겁게");
 
     private boolean isMeanHot;
     private String message;

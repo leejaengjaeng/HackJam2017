@@ -1,12 +1,17 @@
 package com.hackjam.util;
 
 import com.hackjam.constant.WordType;
+import com.hackjam.dao.MenuDAO;
 import com.hackjam.dictionary.BeverageDictionary;
 import com.hackjam.dictionary.TemperatureDictionary;
+import com.hackjam.model.Menu;
 import com.hackjam.model.OrderDetail;
+import org.openkoreantext.processor.KoreanTokenJava;
 import org.openkoreantext.processor.OpenKoreanTextProcessorJava;
 import org.openkoreantext.processor.tokenizer.KoreanTokenizer.KoreanToken;
-import org.openkoreantext.processor.KoreanTokenJava;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import scala.collection.Seq;
 
@@ -21,19 +26,21 @@ import java.util.Map;
 @Component
 public final class KoreanTextMiner {
 
-    private static Map<String,String> BEVERAGE_WITH_TEMPERATURE = new HashMap<>();
+    private static final Logger logger = LoggerFactory.getLogger(KoreanTextMiner.class);
+
     private static Map<String,Integer> MEANING_BEVERAGE_MENUS_MAP = new HashMap<>();
     private static Map<String,Boolean> MEANING_TEMPERATURE_MAP = new HashMap<>();
     private static Map<String,Integer> NUMBER_MAP = new HashMap<>();
     private static Map<String,String> OTHER_COMMANDS = new HashMap<>();
 
+    @Autowired
+    private MenuDAO menuDAO;
 
     KoreanTextMiner(){
 
-        initBeverageWithTemperatureMap();
-
         initBeverageMap();
         initTemperatureMap();
+
         initNumberMap();
         initOtherCommandMap();
         addCustomNouns();
@@ -53,7 +60,7 @@ public final class KoreanTextMiner {
         OpenKoreanTextProcessorJava.addNounsToDictionary(customNouns);
     }
     private void initBeverageMap(){
-        //TODO:DB에서 꺼내서 넣기
+
         for(BeverageDictionary beverage : BeverageDictionary.values()){
             if(!beverage.isOnSale())
             {
@@ -105,7 +112,11 @@ public final class KoreanTextMiner {
         }
 
         //예외처리
-        NUMBER_MAP.remove("스물");
+        NUMBER_MAP.put("하나",1);
+        NUMBER_MAP.put("둘",2);
+        NUMBER_MAP.put("셋",3);
+        NUMBER_MAP.put("넷",4);
+
         NUMBER_MAP.put("스무",20);
         NUMBER_MAP.put("여덜",8);
         NUMBER_MAP.put("열여덜",18);
@@ -114,15 +125,15 @@ public final class KoreanTextMiner {
         NUMBER_MAP.put("마흔여덜",48);
     }
     private void initOtherCommandMap(){
-        //TODO:작성하기
-    }
-    private void initBeverageWithTemperatureMap(){
-        //TODO:Beverage에서 옮기기
+        OTHER_COMMANDS.put("#ORDER_ANSWER_YES","ORDER_YES");
+        OTHER_COMMANDS.put("#ORDER_ANSWER_NO","ORDER_NO");
     }
 
     public List<KoreanToken> getTokenListFromString(String input){
 
+        logger.info("!!!!!!inputString\n"+input);
         CharSequence normalize = OpenKoreanTextProcessorJava.normalize(input);
+        logger.info("!!!!!!inputString\n"+normalize);
         Seq<KoreanToken> tokens = OpenKoreanTextProcessorJava.tokenize(normalize);
         List<KoreanToken> tokenList = scala.collection.JavaConversions.seqAsJavaList(tokens);
 
@@ -133,11 +144,11 @@ public final class KoreanTextMiner {
 
         String word = token.text();
 
-        if(token.pos().equals("Number") || NUMBER_MAP.containsKey(word)){
+        if(token.pos().toString().equals("Number")){
             return WordType.NUMBER;
         }
-        if(BEVERAGE_WITH_TEMPERATURE.containsKey(word)){
-            return WordType.BEVERAGE_WITH_TEMPERATURE;
+        if(NUMBER_MAP.containsKey(word)){
+            return WordType.HANGUL_NUMBER;
         }
         if(MEANING_TEMPERATURE_MAP.containsKey(word)){
             return WordType.TEMPERATURE;
@@ -153,7 +164,8 @@ public final class KoreanTextMiner {
 
     public String miningTest(String inputString){
 
-        CharSequence normalizedString = OpenKoreanTextProcessorJava.normalize(inputString);
+        //CharSequence normalizedString = OpenKoreanTextProcessorJava.normalize(inputString);
+        CharSequence normalizedString = inputString.replace(" ","");
         Seq<KoreanToken> tokens = OpenKoreanTextProcessorJava.tokenize(normalizedString);
         List<KoreanTokenJava> javaTokens = OpenKoreanTextProcessorJava.tokensToJavaKoreanTokenList(tokens,false);
 

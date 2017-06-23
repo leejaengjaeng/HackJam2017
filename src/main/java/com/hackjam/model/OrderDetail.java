@@ -1,5 +1,8 @@
 package com.hackjam.model;
 
+import com.hackjam.dictionary.BeverageDictionary;
+import com.hackjam.dictionary.TemperatureDictionary;
+
 /**
  * @author jun-ho.lee on 2017-06-08.
  */
@@ -8,6 +11,7 @@ public class OrderDetail {
 	private Menu menu;
 	private int count;
 	private boolean hot;
+	private boolean isTemperatureSelect;
 
 	public OrderDetail(){}
 	public OrderDetail(int orderId, Menu menu, int count, boolean hot){
@@ -63,6 +67,15 @@ public class OrderDetail {
 		return menu.getMenuId();
 	}
 
+	public boolean isTemperatureSelect() {
+		return isTemperatureSelect;
+	}
+
+	public void setTemperatureSelect(boolean temperatureSelect) {
+		isTemperatureSelect = temperatureSelect;
+	}
+
+
 	public void setMenuName(String menuName) {
 		if (menu == null) {
 			menu = new Menu();
@@ -73,16 +86,11 @@ public class OrderDetail {
 	public void setEmpty(){
 		menu=null;
 		count=0;
+		isTemperatureSelect = false;
 	}
 
-	public boolean isDoneOrder(){
-		if(menu !=null && count!=0){
-			return true;
-		}
-		return false;
-	}
 	public boolean isEmpty(){
-		if(menu ==null && count ==0){
+		if(menu ==null){
 			return true;
 		}
 		return false;
@@ -101,6 +109,11 @@ public class OrderDetail {
 			count = 1;
 		}
 		return true;
+	}
+
+	@Override
+	public String toString(){
+		return TemperatureDictionary.getKoreanWordHotIfTrue(hot)+" "+ BeverageDictionary.getOriginalNameFromMenuId(getMenuId()) + " "+getCount() + "잔\n";
 	}
 
 }

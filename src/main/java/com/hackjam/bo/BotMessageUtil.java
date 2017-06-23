@@ -1,15 +1,18 @@
 package com.hackjam.bo;
 
 import com.hackjam.util.KoreanTextMiner;
+import com.linecorp.bot.model.action.MessageAction;
+import com.linecorp.bot.model.action.PostbackAction;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.message.StickerMessage;
+import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.TextMessage;
+import com.linecorp.bot.model.message.template.ConfirmTemplate;
 import org.openkoreantext.processor.tokenizer.KoreanTokenizer.KoreanToken;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.xml.soap.Text;
 import java.util.List;
 
 
@@ -29,12 +32,12 @@ public class BotMessageUtil {
         List<KoreanToken> tokenList = textMiner.getTokenListFromString(originalString);
 
 
-
-
-
         StringBuffer testReturnString =new StringBuffer("<br>토크나이징 시작<br>");
         for(KoreanToken token : tokenList){
-            testReturnString.append("<br>"+token.text()+":"+token.pos()+":"+token.productPrefix()+":"+token.productArity());
+            testReturnString.append("<br>"+token.text()+":"+token.pos().toString()+":"+token.productPrefix()+":"+token.productArity());
+            if(token.pos().toString().equals("Number")){
+                testReturnString.append("\nNumber\n");
+            }
         }
 
         return testReturnString.toString();
@@ -54,6 +57,16 @@ public class BotMessageUtil {
 
     public TextMessage replyTextEvent(String replyText){
         return new TextMessage(replyText);
+    }
+
+    public TemplateMessage replyTemplateMessage(String replyText){
+        ConfirmTemplate confirmTemplate = new ConfirmTemplate(
+                replyText,
+                new PostbackAction("Yes","#ORDER_ANSWER_YES"),
+                new PostbackAction("No","#ORDER_ANSWER_No")
+        );
+
+        return new TemplateMessage("라인에서 PC버전은 소홀한가 봅니다...",confirmTemplate);
     }
 
     public StickerMessage replyUnhandledEvent(Event event){
