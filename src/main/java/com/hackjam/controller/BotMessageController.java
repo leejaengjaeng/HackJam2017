@@ -1,6 +1,6 @@
 package com.hackjam.controller;
 
-import com.hackjam.bo.BotMessageBo;
+import com.hackjam.bo.BotMessageUtil;
 import com.hackjam.bo.BotOrderProcessBo;
 import com.hackjam.constant.BotOrderStep;
 import com.linecorp.bot.model.event.Event;
@@ -23,28 +23,30 @@ public class BotMessageController {
     private static final Logger logger = LoggerFactory.getLogger(BotMessageController.class);
 
     @Autowired
-    BotMessageBo botMessageBo;
+    BotMessageUtil botMessageUtil;
 
     @Autowired
     BotOrderProcessBo botOrderProcessBo;
 
     @EventMapping
     public Message handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
-        logger.info("TextMessage Event");
-        return botMessageBo.replyTextEvent(event);
+        logger.info("TextMessage Event\n"+event.getMessage().getText());
+
+        return botOrderProcessBo.replySuitableMessage(event);
     }
 
     @EventMapping
     public Message handleJoinEvnet(JoinEvent event){
+        logger.debug("#####여기 들어오긴하냐!!!######");
         String userId = event.getSource().getUserId();
         botOrderProcessBo.addToCurrentUsers(userId, BotOrderStep.HELLO);
-        return botMessageBo.replyJoinEvent(event);
+        return botMessageUtil.replyJoinEvent();
     }
 
     @EventMapping
     public Message defaultMessageEvent(Event event){
         String senderId = event.getSource().getSenderId();
         logger.info("senderId : "+senderId +"default event : "+event);
-        return botMessageBo.replyUnhandledEvent(event);
+        return botMessageUtil.replyUnhandledEvent(event);
     }
 }
