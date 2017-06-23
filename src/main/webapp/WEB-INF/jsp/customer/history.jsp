@@ -26,31 +26,25 @@
 
     <div class="order_history">
         <c:forEach var="order" items="${orders}">
-            <div class="order">
-                <input type="hidden" class="order_id_hidden" value="${order.orderId}"/>
-                <label>
-                    <c:if test="${order.status == 0}">
-                        <div class="undone_order_tag_div">
-                            음료 요청
-                        </div>
-                    </c:if>
-                    <c:if test="${order.status == 1}">
-                        <div class="undone_order_tag_div">
-                            제작중
-                        </div>
-                    </c:if>
-                    <c:if test="${order.status == 2}">
-                        <div class="done_order_tag_div">
-                            전달 완료
-                        </div>
-                    </c:if>
-                </label>
-                <input type="hidden" class="order_status_hidden" value="${order.status}"/>
+            <c:if test="${order.status == 0}">
+                <c:set var="className" value="btn btn-warning" scope="request"/>
+                <c:set var="titleName" value="음료 요청" scope="request"/>
+            </c:if>
+            <c:if test="${order.status == 1}">
+                <c:set var="className" value="btn btn-info" scope="request"/>
+                <c:set var="titleName" value="음료 제작중" scope="request"/>
 
-                <div class="user_div">
+            </c:if>
+            <c:if test="${order.status == 2}">
+                <c:set var="className" value="btn btn-defatul" scope="request"/>
+                <c:set var="titleName" value="완료" scope="request"/>
+            </c:if>
+            <button type="button" class="${className}">
+
+                <div class="title_div">
+                        ${titleName}<br/>
                         ${order.orderYmdt}
                 </div>
-
                 <c:set var="menuCount" value="0"/>
                 <c:forEach var="orderDetail" items="${order.orderDetails}">
                     <div>
@@ -73,7 +67,9 @@
                     <label>총 음료 ${menuCount}잔</label><br>
                     <label>${order.cost}원</label>
                 </div>
-            </div>
+            </button>
+
+
         </c:forEach>
     </div>
 </div>

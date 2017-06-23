@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
 #order_detail_table td {
     padding: 5px;
 }
@@ -22,7 +24,7 @@
 .order_detail_container_div {
     text-align: center;
     display: inline-block;
-    float:right;
+    float: right;
     margin-top: 100px;
     margin-right: 50px;
 }
@@ -58,6 +60,7 @@
 .wondo_container {
     margin-top: 100px;
     text-align: center;
+    font-family: 'Nanum Gothic', sans-serif;
 }
 
 .category_title_div {
@@ -66,6 +69,7 @@
 
 .category_title_lbl {
     font-size: 20px;
+    text-decoration: underline;
 }
 
 .send_order {
@@ -131,10 +135,11 @@ td {
     font-size: 13px;
 }
 
-#order_detail_table{
+#order_detail_table {
     width: 450px;
 }
-#order_detail_table .menu_count_input{
+
+#order_detail_table .menu_count_input {
     margin-left: 40px;
 }
 

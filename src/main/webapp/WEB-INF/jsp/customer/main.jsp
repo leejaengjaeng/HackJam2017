@@ -51,7 +51,7 @@
             <!-- 서버에서 내려주는 메뉴 목록 출력 -->
             <div class="menu_container_div">
                 <div class="category_title_div">
-                    <label class="category_title_lbl">Coffee</label>
+                    <label class="category_title_lbl">COFFEE</label>
                 </div>
                 <c:forEach var="menu" items="${menuMap[MenuType.COFFEE.name]}">
                     <table class="menu_table">
@@ -107,7 +107,7 @@
             <!-- PREMIUM, -->
             <div class="menu_container_div">
                 <div class="category_title_div">
-                    <label class="category_title_lbl">Premium</label>
+                    <label class="category_title_lbl">PREMIUM</label>
                 </div>
                 <c:forEach var="menu" items="${menuMap[MenuType.PREMIUM.name]}">
                     <table class="menu_table">
@@ -135,7 +135,7 @@
             <!-- SEASON -->
             <div class="menu_container_div">
                 <div class="category_title_div">
-                    <label class="category_title_lbl">Season</label>
+                    <label class="category_title_lbl">SEASON</label>
                 </div>
                 <c:forEach var="menu" items="${menuMap[MenuType.SEASON.name]}">
                     <table class="menu_table">

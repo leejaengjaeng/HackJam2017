@@ -32,19 +32,20 @@ $(function () {
                 'orderId': orderId,
                 'status': changeStatus
             }, success: function () {
-                var moveClass
+                var moveClass;
                 var html;
 
-                order.find('.order_status_hidden').val(changeStatus);
-
-                if(changeStatus == 1){
+                if (changeStatus == 1) {
                     moveClass = '.undone_orders';
-                    html = '<div class="undone_order">'+order.html()+'</div>';
-                } else{
+                    order.find('button').prop('class', 'btn btn-info');
+                    html = '<div class="undone_order">' + order.html() + '</div>';
+                } else {
                     moveClass = '.done_orders';
-                    html = '<div class="done_order">'+order.html()+'</div>';
+                    order.find('button').prop('class', 'btn btn-default');
+                    html = '<div class="done_order">' + order.html() + '</div>';
                 }
 
+                order.find('.order_status_hidden').val(changeStatus);
                 $(moveClass).append(html);
                 order.remove();
             }, error: function () {

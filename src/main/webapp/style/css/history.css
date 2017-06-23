@@ -1,22 +1,22 @@
-.order{
-    display: inline-block;
-    width: 270px; height: 250px;
-    margin: 10px;
-    border: 1px solid;
-    border-color: #00c73c;
-    border-width: 2px;
-    padding: 15px;
-    font-size: 12pt;
-    overflow: auto;
-}
-
-.user_div{
+.title_div {
     margin-bottom: 5px;
     font-weight: bold;
-    margin-top: -5px;
     padding-bottom: 5px;
+    font-size: 17px;
 }
 
-.undone_order_tag_div{
+button {
+    overflow: auto;
+    width: 250px;
+    height: 200px;
+    margin: 10px;
+}
+
+button label {
+    font-size: 15px;
+}
+
+.undone_order_tag_div {
     background-color: #faf2cc;
 }
+
