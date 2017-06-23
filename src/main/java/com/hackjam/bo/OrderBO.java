@@ -28,7 +28,7 @@ public class OrderBO {
 	@Transactional(rollbackFor = Exception.class)
 	public void addOrder(Order order, String employeeNo) {
 		order.getEmployee().setEmployeeNo(employeeNo);
-		order.setOrderStatus(false);
+		order.setDone(false);
 
 		orderDAO.insert(order);
 		orderDetailDAO.insert(order.getOrderId(), order.getOrderDetails());
@@ -47,14 +47,14 @@ public class OrderBO {
 		orderMap.put(false, new ArrayList<>());
 
 		for (Order order : orders) {
-			orderMap.get(order.isOrderStatus()).add(order);
+			orderMap.get(order.isDone()).add(order);
 		}
 
 		return orderMap;
 	}
 
 	public boolean changeOrderStatus(Order order) {
-		return orderDAO.updateOrderStatus(order.getOrderId(), order.isOrderStatus());
+		return orderDAO.updateOrderStatus(order.getOrderId(), order.isDone());
 	}
 
 	private void setOrderDetails(List<Order> orders) {

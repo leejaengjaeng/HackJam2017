@@ -36,6 +36,6 @@ public class OrderController {
 	@ResponseBody
 	@RequestMapping(value="/changeStatus", method = RequestMethod.POST)
 	public void changeStatus(Order order){
-//		orderBO.changeOrderStatus(order);
+		orderBO.changeOrderStatus(order);
 	}
 }

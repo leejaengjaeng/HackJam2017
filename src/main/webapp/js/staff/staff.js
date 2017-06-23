@@ -24,12 +24,12 @@ $(function () {
             url: '/order/changeStatus',
             data: {
                 'orderId': orderId,
-                'orderStatus': changeStatus
+                'done': changeStatus
             }, success: function () {
                 var moveClass
                 var html;
 
-                order.find('.order_status_hidden').val(changeStatus);
+                order.find('.order_done_hidden').val(changeStatus);
 
                 if(changeStatus == false){
                     moveClass = '.undone_orders';

@@ -28,7 +28,7 @@
         <c:forEach var="order" items="${orderMap[false]}">
             <div class="undone_order" >
                 <input type="hidden" class="order_id_hidden" value="${order.orderId}"/>
-                <input type="hidden" class="order_status_hidden" value="${order.orderStatus}"/>
+                <input type="hidden" class="order_done_hidden" value="${order.done}"/>
 
                 <div>
                         ${order.employee.employeeName}(${order.employee.employeeNo})
@@ -64,7 +64,7 @@
         <c:forEach var="order" items="${orderMap[true]}">
             <div class="done_order" >
                 <input type="hidden" class="order_id_hidden" value="${order.orderId}"/>
-                <input type="hidden" class="order_status_hidden" value="${order.orderStatus}"/>
+                <input type="hidden" class="order_done_hidden" value="${order.done}"/>
 
                 <div>
                         ${order.employee.employeeName}(${order.employee.employeeNo})
